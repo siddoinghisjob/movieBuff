@@ -1,0 +1,92 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('./assets/fonts/helvetica-neu.ttf');
+}
+@font-face {
+  font-family: 'La belle aurore';
+  src: url('./assets/fonts/LaBelleAurore.woff');
+}
+
+@font-face {
+  font-family: 'Coolvetica';
+  src: url('./assets/fonts/CoolveticaRg-Regular.woff');
+}
+
+@import 'animate.css';
+
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
+.specSha{
+  box-shadow: 0px 0px 7px 10px rgb(0,0,0,0.25);
+}
+
+.bgnice{
+  background: rgb(1, 179, 228);  /* fallback for old browsers */;
+  color:#103210;
+}
+
+.bgbanner{
+  background: url('../public/assets/images/bg.jpg');
+  box-shadow: inset 0 0 0 1000px rgba(1, 179, 228, 0.4);
+}
+
+.fadeIn{
+  animation: fadeIn 2s 0.3s forwards;
+}
+
+@keyframes fadeInfadeOut {
+  to{opacity: 1;}
+}
+
+.fontDesi{
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Rubik', sans-serif;
+}
+
+.brandHeading{
+  animation: fadeIn 2s 0.3s;
+  animation-fill-mode: forwards;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Rubik', sans-serif;
+}
+
+/* width */
+.scrollSpec::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.scrollSpec::-webkit-scrollbar-track {
+  background: #c0ffc0; 
+  border-radius: 20px;
+}
+ 
+/* Handle */
+.scrollSpec::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.scrollSpec::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+@media screen and (min-width:480px) {
+  .scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scroll {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+.Tiles.activate{
+  animation: fadeIn 3s;
+  animation-fill-mode: forwards;
+}
