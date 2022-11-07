@@ -1,29 +1,35 @@
 import React,{useRef} from 'react'
-import {ColorRing} from "react-loader-spinner";
-import {BiLeftArrow} from "react-icons/bi";
-import useSmoothScroll from "react-smooth-scroll-hook";
 import Image from '../image';
 
 export default function Slider(props) {
   const arr = [];
-  const {createRef} = React;
-  const refImg = Array.from({length : 10},()=>createRef(0));
-  const refImgLoader = Array.from({length : 10},()=>createRef(0));
   const ref = useRef();
-  const { scrollTo } = useSmoothScroll({
-    ref,
-    speed: 100,
-    direction: "x",
-  });
-  for(let i = 0; i < 10; i++){
+  const scrollTo = (parity)=>{
+    let width = ref.current.clientWidth;
+    if(parity > 0)
+      ref.current.scrollLeft += width;
+    else if(parity < 0)
+      ref.current.scrollLeft -= width; 
+  }
+
+  for(let i = 0; i < props?.arr?.length; i++){
     arr.push(
-      <span className="min-w-[10rem] Tiles relative min-h-[18rem] flex flex-col justify-center items-center m-2">
-        <Image source={props.arr[i].src} alt={props.arr[i].alt}/>
-        {props.arr[i].tag&&
-        <span className='bg-black py-1 w-full items-center justify-center flex px-2 bottom-1  roun text-white'>
-        {props.arr[i].tag}
-      </span>}
-      </span>
+      <span onClick={()=>{
+        if(props?.arr[i]?.link){
+          window.location.href = props?.arr[i]?.link;
+        }
+      }} className={props?.arr[i]?.link?
+        "relative cursor-pointer Tiles min-h-[25rem] py-10 px-6 max-h-[25rem] lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%] justify-center items-center":
+        "relative Tiles flex flex-col min-h-[25rem] py-10 px-6 max-h-[25rem] lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%]  justify-center items-center"}>
+          <Image source={props?.arr[i]?.src} alt={props?.arr[i]?.alt}/>
+          {props?.arr[i]?.tag?.length>0&&
+          <span className='bg-yellow-500 p-1 w-full items-center justify-center flex px-2 bottom-1  roun text-prime'>
+          <ul>
+            <li className='font-bold p-1'>{props?.arr[i]?.tag[1]}</li>
+            <li className='text-gray-500 p-1'>{props?.arr[i]?.tag[0]}</li>
+          </ul>
+        </span>}
+        </span>
     );
   }
   return (
@@ -32,11 +38,11 @@ export default function Slider(props) {
               className="absolute top-1/2 left-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
               onClick={() => scrollTo(-400)}
             >
-              <BiLeftArrow className="text-tert h-10 w-10" />
+              <b className="text-tert h-10 w-10 px-3">&lt;</b>
             </div>
             <div
               ref={ref}
-              className="relative w-full overflow-x-auto p-4 scroll px-10 flex flex-row"
+              className="relative justify-start overflow-x-auto overflow-y-hidden md:overflow-hidden scroll-smooth flex"
             >
               {arr}
             </div>
@@ -44,7 +50,7 @@ export default function Slider(props) {
               className="absolute top-1/2 right-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
               onClick={() => scrollTo(400)}
             >
-              <BiLeftArrow className="text-tert h-10 w-10 rotate-180" />
+              <b className="text-tert h-10 w-10 px-3">&gt;</b>
             </div>
           </div>
   )

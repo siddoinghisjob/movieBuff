@@ -4,7 +4,7 @@ import Header from '../header';
 
 export default function PageNotFound() {
   return (
-    <div className='min-h-screen justify-between flex flex-col'>
+    <div className='min-h-screen h-screen justify-between flex flex-col'>
         <Header/>
         <div className='w-full h-full flex justify-center items-center'>
             <div className='fontDesi text-prime text-7xl'>
