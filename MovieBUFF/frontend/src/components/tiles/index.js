@@ -11,7 +11,7 @@ export default function Tiles(props) {
     data.results.forEach(el=>{
       const dataEntr = {
         bg:'https://image.tmdb.org/t/p/original'+el.backdrop_path,
-        profile:el.poster_path?'https://image.tmdb.org/t/p/w300'+el.poster_path:"/assets/images/nonfoundhor.png",
+        profile:el.poster_path?'https://image.tmdb.org/t/p/w500'+el.poster_path:"/assets/images/nonfoundhor.png",
       popularity:el.vote_count?el.vote_count:1,
         id:el.id,
         type:'movie',
@@ -24,7 +24,7 @@ export default function Tiles(props) {
     data.results.forEach(el=>{
       const dataEntr = {
         bg:'https://image.tmdb.org/t/p/original'+el.backdrop_path,
-        profile:el.poster_path?'https://image.tmdb.org/t/p/w300'+el.poster_path:"/assets/images/nonfoundhor.png",
+        profile:el.poster_path?'https://image.tmdb.org/t/p/w500'+el.poster_path:"/assets/images/nonfoundhor.png",
       popularity:el.vote_count?el.vote_count:1,
         id:el.id,
         type:'tv',

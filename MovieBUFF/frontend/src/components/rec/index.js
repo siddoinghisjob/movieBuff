@@ -19,7 +19,7 @@ export default function Rec(props) {
             ...rec,
             {
               src: el.poster_path
-                ? "https://image.tmdb.org/t/p/w200" + el.poster_path
+                ? "https://image.tmdb.org/t/p/w500" + el.poster_path
                 : "/assets/images/nonfoundhor.png",
               alt: el.title,
               link: "/tv/" + el.id,

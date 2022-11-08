@@ -117,7 +117,7 @@ export default function Header(props) {
               </p>
             </div>
           )}
-          <ul className="flex min-w-fit w-full justify-between px-10 flex-row gap-2 font-semibold md:justify-end">
+          <ul className={props?.search?"flex md:w-fit md:absolute static right-2 top-1/3 w-full justify-between px-10 flex-row gap-2 font-semibold md:justify-end":"flex w-fit justify-between px-10 flex-row gap-2 font-semibold md:justify-end"}>
             <li
               onClick={() => (window.location.href = "/")}
               className="cursor-pointer"
