@@ -19,7 +19,7 @@ export default function Header(props) {
     setSearch(search => arr);
   },[searchKey])
   const getSearch = ()=>{
-    fetch("https://api.themoviedb.org/3/search/multi?api_key=d295dbc3df693393259f2c07fb7a0e4a&page=1&include_adult=false&query="+searchKey)
+    fetch("https://api.themoviedb.org/3/search/multi?api_key="+process.env.REACT_APP_MOVIE_API_KEY+"&page=1&include_adult=false&query="+searchKey)
     .then(res=>res.json())
     .then(data=>{
       setSearch(search=>[]);
@@ -75,8 +75,8 @@ export default function Header(props) {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="26"
+              height="26"
               fill="currentColor"
               class="bi bi-list"
               viewBox="0 0 16 16"

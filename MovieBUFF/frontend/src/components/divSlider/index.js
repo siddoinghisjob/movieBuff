@@ -12,7 +12,7 @@ export default function Slider(props) {
   for (let i = 0; i < props.arr?.length; i++) {
     arr.push(
       <div className="p-2 min-w-[100%] max-w-[100%] md:min-w-[50%] md:max-w-[50%] lg:min-w-[25%] lg:max-w-[25%] min-h-[18rem] max-h-[18rem]">
-        <span className="bg-tert w-full font-mono p-5 rounded-3xl Tiles relative flex flex-col min-h-[17rem] max-h-[17rem]">
+        <span className="bg-tert w-full font-mono p-5 rounded-3xl Tiles justify-between relative flex flex-col min-h-[17rem] max-h-[17rem]">
           <div className="w-full font-extrabold flex flex-row">
             <span className="w-full overflow-x-auto flex justify-start items-start scrollSpec">
               Ep#{props.arr[i]?.number}
@@ -21,8 +21,8 @@ export default function Slider(props) {
               {props.arr[i]?.name}
             </p>
           </div>
-          {(props.arr[i]?.poster || props.arr[i]?.overview) && (
-            <div className="flex flex-col items-center h-56 overflow-y-auto scrollSpec">
+          {(props.arr[i]?.poster || props.arr[i]?.overview!==" ") && (
+            <div className={props.arr[i]?.overview !== " "?"flex flex-col justify-between items-center h-56 overflow-y-auto scrollSpec":"flex flex-col justify-end items-center h-56 overflow-y-auto scrollSpec"}>
               {props.arr[i]?.poster && (
                 <div className="h-44 max-w-[200px]">
                   <Image
@@ -31,7 +31,7 @@ export default function Slider(props) {
                   />
                 </div>
               )}
-              {props.arr[i]?.overview && (
+              {props.arr[i]?.overview!==" " && (
                 <span className="py-1 w-full flex px-2 bottom-1 justify-start items-start h-full text-white">
                   {props.arr[i]?.overview}
                 </span>

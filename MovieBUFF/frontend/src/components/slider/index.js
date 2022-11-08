@@ -20,8 +20,8 @@ export default function Slider(props) {
         }}
         className={
           props?.arr[i]?.link
-            ? "relative cursor-pointer Tiles min-h-[25rem] py-10 px-6 max-h-[25rem] lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%] justify-center items-center"
-            : "relative Tiles flex flex-col min-h-[25rem] py-10 px-6 max-h-[25rem] lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%]  justify-center items-center"
+            ? "relative cursor-pointer Tiles min-h-[25rem] p-10 px-7 lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%] justify-center items-center"
+            : "relative Tiles flex flex-col min-h-[25rem] p-10 px-7 lg:min-w-[20%] min-w-[100%] md:min-w-[50%] lg:max-w-[20%] max-w-[100%] md:max-w-[50%]  justify-center items-center"
         }
       >
         <Image source={props?.arr[i]?.src} alt={props?.arr[i]?.alt} />

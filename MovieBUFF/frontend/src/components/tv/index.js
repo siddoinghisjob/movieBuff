@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, Suspense, useRef } from "react";
 import Header from "../header";
+import { Dna, InfinitySpin, RotatingLines } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
 
 export default function TV() {
@@ -19,7 +20,8 @@ export default function TV() {
     fetch(
       "https://api.themoviedb.org/3/tv/" +
         id +
-        "?api_key=d295dbc3df693393259f2c07fb7a0e4a"
+        "?api_key=" +
+        process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -65,7 +67,8 @@ export default function TV() {
     fetch(
       "https://api.themoviedb.org/3/tv/" +
         id +
-        "/videos?api_key=d295dbc3df693393259f2c07fb7a0e4a"
+        "/videos?api_key=" +
+        process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -92,7 +95,8 @@ export default function TV() {
         id +
         "/season/" +
         (key ? key : tv?.firstSeason) +
-        "?api_key=d295dbc3df693393259f2c07fb7a0e4a"
+        "?api_key=" +
+        process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -100,17 +104,17 @@ export default function TV() {
         data.episodes?.forEach((el) =>
           episodeData.push({
             name: el.name,
-            poster: "https://image.tmdb.org/t/p/w200" + el.still_path,
-            overview: data.overview,
+            poster: "https://image.tmdb.org/t/p/w300" + el.still_path,
+            overview: data.overview ? data.overview : " ",
             rating: el.vote_count,
             number: el.episode_number,
           })
         );
         const entr = {
           name: data.name,
-          overview: data.overview,
+          overview: data.overview ? data.overview : " ",
           poster: data.poster_path
-            ? "https://image.tmdb.org/t/p/w300" + data.poster_path
+            ? "https://image.tmdb.org/t/p/w400" + data.poster_path
             : "/assets/images/nonfoundhor.png",
           episode: episodeData,
         };
@@ -128,7 +132,7 @@ export default function TV() {
     banner: {
       background: "url('" + tv?.bg + "') no-repeat",
       boxShadow: "inset 0 0 0 1000px rgba(120, 20, 28, 0.6)",
-      backgroundSize: "100%",
+      backgroundSize: "100% 100%",
     },
   };
 
@@ -137,20 +141,14 @@ export default function TV() {
       <Suspense
         fallback={
           <div className="h-full w-full justify-center items-center flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-arrow-repeat"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-              <path
-                fill-rule="evenodd"
-                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-              />
-            </svg>
+            <Dna
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
           </div>
         }
       >
@@ -189,20 +187,14 @@ export default function TV() {
                   <Suspense
                     fallback={
                       <div className="h-full w-full justify-center items-center flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-arrow-repeat"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                          <path
-                            fill-rule="evenodd"
-                            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                          />
-                        </svg>
+                        <Dna
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="dna-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="dna-wrapper"
+                        />
                       </div>
                     }
                   >
@@ -212,7 +204,7 @@ export default function TV() {
                 </div>
                 <div className="flex flex-col fontDesi h-full justify-center w-full p-3">
                   {trailer && (
-                    <div className="flex relative w-full min-w-[15rem] justify-center items-center md:min-h-[17rem] md:max-w-[60%] min-h-[13rem] bg-gradient-to-tr from-orange-300 to bg-green-400 rounded-lg">
+                    <div className="flex relative w-full min-w-[15rem] justify-center items-center md:min-h-[17rem] min-h-[13rem] bg-black bg-opacity-50">
                       <iframe
                         src={"https://www.youtube.com/embed/" + trailer}
                         frameborder="0"
@@ -222,27 +214,24 @@ export default function TV() {
                         className="h-full z-10 min-w-full absolute max-w-full md:min-h-[17rem] min-h-[13rem]"
                         loading="lazy"
                       />
-                      <div className="w-20 z-0 h-20 flex items-center justify-center animate-pulse text-prime bg-yellow-500 rounded-full">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="35"
-                          height="35"
-                          fill="currentColor"
-                          class="bi bi-cloud-download-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"
-                          />
-                        </svg>
+                      <div className="w-20 z-0 h-20 flex items-center justify-center animate-pulse shadow-xl rounded-full">
+                        <RotatingLines
+                          strokeColor="white"
+                          strokeWidth="4"
+                          animationDuration="0.75"
+                          width="96"
+                          visible={true}
+                        />
                       </div>
                     </div>
                   )}
                 </div>
               </div>
               <div className="hidden md:flex flex-col justify-between h-full">
-                <p className="w-fit">
+                <p className="w-full flex justify-center items-center">
+                  {!tv?.overview && (
+                    <InfinitySpin width="200" color="#4fa94d" />
+                  )}
                   {tv?.overview}
                   {tv?.date}
                 </p>
@@ -272,20 +261,14 @@ export default function TV() {
                 <Suspense
                   fallback={
                     <div className="h-full w-full justify-center items-center flex">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-arrow-repeat"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                        <path
-                          fill-rule="evenodd"
-                          d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                        />
-                      </svg>
+                      <Dna
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="dna-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="dna-wrapper"
+                      />
                     </div>
                   }
                 >
@@ -297,7 +280,10 @@ export default function TV() {
                   />
                 </Suspense>
               </div>
-              <p className="w-fit">{tv?.overview}</p>
+              <p className="w-full justify-center items-center">
+                {!tv?.overview && <InfinitySpin width="200" color="#4fa94d" />}
+                {tv?.overview}
+              </p>
             </div>
             <div className="items-center w-full flex flex-row justify-between">
               {tv?.home && (
@@ -342,26 +328,25 @@ export default function TV() {
                   ))}
                 </ul>
               </div>
-              <p className="text-lg">{episode?.overview}</p>
+              <p className="text-lg flex w-full justify-center items-center">
+                {!episode?.overview && (
+                  <InfinitySpin width="200" color="#4fa94d" />
+                )}
+                {episode?.overview}
+              </p>
               {episode?.episode?.length > 0 && (
                 <div>
                   <Suspense
                     fallback={
                       <div className="h-full w-full justify-center items-center flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-arrow-repeat"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                          <path
-                            fill-rule="evenodd"
-                            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                          />
-                        </svg>
+                        <Dna
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="dna-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="dna-wrapper"
+                        />
                       </div>
                     }
                   >
@@ -376,20 +361,14 @@ export default function TV() {
             <Suspense
               fallback={
                 <div className="h-full w-full justify-center items-center flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-arrow-repeat"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                    />
-                  </svg>
+                  <Dna
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+                  />
                 </div>
               }
             >
@@ -398,20 +377,14 @@ export default function TV() {
             <Suspense
               fallback={
                 <div className="h-full w-full justify-center items-center flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-arrow-repeat"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                    />
-                  </svg>
+                  <Dna
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+                  />
                 </div>
               }
             >
@@ -420,43 +393,31 @@ export default function TV() {
             <Suspense
               fallback={
                 <div className="h-full w-full justify-center items-center flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-arrow-repeat"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                    />
-                  </svg>
+                  <Dna
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+                  />
                 </div>
               }
             >
-              <Rec id={id} type="tv" />
+              <Rec act={false} id={id} type="tv" />
             </Suspense>
           </div>
           <Suspense
             fallback={
               <div className="h-full w-full justify-center items-center flex">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-arrow-repeat"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-                  />
-                </svg>
+                <Dna
+                  visible={true}
+                  height="80"
+                  width="80"
+                  ariaLabel="dna-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="dna-wrapper"
+                />
               </div>
             }
           >

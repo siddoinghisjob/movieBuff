@@ -5,7 +5,7 @@ import {useInView} from "react-intersection-observer";
 export default function Tiles(props) {
   const [list,setList] = useState([]);
   const getList = async()=>{
-    let res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key=d295dbc3df693393259f2c07fb7a0e4a&with_genres="+props?.genreNumberMO);
+    let res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key="+process.env.REACT_APP_MOVIE_API_KEY+"&with_genres="+props?.genreNumberMO);
     let data = await res.json();
     let arrAction = [];
     data.results.forEach(el=>{
@@ -19,7 +19,7 @@ export default function Tiles(props) {
       }
       arrAction.push(dataEntr)
     })
-    res = await fetch("https://api.themoviedb.org/3/discover/tv?api_key=d295dbc3df693393259f2c07fb7a0e4a&with_genres="+props?.genreNumberTV);
+    res = await fetch("https://api.themoviedb.org/3/discover/tv?api_key="+process.env.REACT_APP_MOVIE_API_KEY+"&with_genres="+props?.genreNumberTV);
     data = await res.json();
     data.results.forEach(el=>{
       const dataEntr = {

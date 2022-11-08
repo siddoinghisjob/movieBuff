@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import Header from "../header";
 import { useParams } from "react-router-dom";
 import Image from "../image";
+import { InfinitySpin, Dna } from "react-loader-spinner";
 
 export default function Movie() {
   let { id } = useParams();
@@ -15,7 +16,7 @@ export default function Movie() {
     fetch(
       "https://api.themoviedb.org/3/movie/" +
         id +
-        "?api_key=d295dbc3df693393259f2c07fb7a0e4a"
+        "?api_key="+process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -59,7 +60,7 @@ export default function Movie() {
     fetch(
       "https://api.themoviedb.org/3/movie/" +
         id +
-        "/videos?api_key=d295dbc3df693393259f2c07fb7a0e4a"
+        "/videos?api_key="+process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -129,19 +130,7 @@ export default function Movie() {
                     loading="lazy"
                   />
                   <div className="w-20 z-0 h-20 flex items-center justify-center animate-pulse text-prime bg-yellow-500 rounded-full">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="35"
-                      height="35"
-                      fill="currentColor"
-                      class="bi bi-cloud-download-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"
-                      />
-                    </svg>
+                    <InfinitySpin width="200" color="#4fa94d" />
                   </div>
                 </div>
               )}
@@ -156,7 +145,10 @@ export default function Movie() {
             </div>
           </div>
           <div className="hidden md:flex flex-col justify-between h-full">
-            <p className="w-fit">{movie?.overview}</p>
+          <p className="w-full justify-center flex items-center">
+          {!movie?.overview&&<InfinitySpin width="200" color="#4fa94d" />}
+                {movie?.overview}
+          </p>
             <div className="p-2 w-full flex items-center justify-between flex-row">
               {movie?.home && (
                 <a
@@ -188,7 +180,10 @@ export default function Movie() {
               act={true}
             />
           </div>
-          <p className="w-fit">{movie?.overview}</p>
+          <p className="w-full justify-center flex items-center">
+          {!movie?.overview&&<InfinitySpin width="200" color="#4fa94d" />}
+                {movie?.overview}
+          </p>
         </div>
         <div className="items-center w-full flex flex-row justify-between">
           {movie?.home && (
@@ -229,33 +224,72 @@ export default function Movie() {
         </div>
       </div>
       <hr />
-      <Suspense
-        fallback={
-          <div className="h-full w-full justify-center items-center flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-arrow-repeat"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-              <path
-                fill-rule="evenodd"
-                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+      <div className="flex flex-col">
+        <Suspense
+          fallback={
+            <div className="h-full w-full justify-center items-center flex">
+              <Dna
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
               />
-            </svg>
-          </div>
-        }
-      >
-        <div className="flex flex-col">
+            </div>
+          }
+        >
           <Crew id={id} type="movie" />
+        </Suspense>
+        <Suspense
+          fallback={
+            <div className="h-full w-full justify-center items-center flex">
+              <Dna
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
+            </div>
+          }
+        >
           <Cast id={id} type="movie" />
-          <Rec id={id} type="movie" />
-        </div>
-        <Footer />
-      </Suspense>
+        </Suspense>
+        <Suspense
+          fallback={
+            <div className="h-full w-full justify-center items-center flex">
+              <Dna
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
+            </div>
+          }
+        >
+          <Rec id={id} type="movie"/>
+        </Suspense>
+        <Suspense
+          fallback={
+            <div className="h-full w-full justify-center items-center flex">
+              <Dna
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              />
+            </div>
+          }
+        >
+          <Footer />{" "}
+        </Suspense>
+      </div>
     </div>
   );
 }

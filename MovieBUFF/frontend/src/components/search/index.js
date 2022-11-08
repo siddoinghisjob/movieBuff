@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import {Dna} from "react-loader-spinner"
 
 export default function Search() {
   const [search, setSearch] = useState([]);
@@ -11,7 +12,7 @@ export default function Search() {
   });
   const getSearch = () => {
     fetch(
-      "https://api.themoviedb.org/3/search/multi?api_key=d295dbc3df693393259f2c07fb7a0e4a&page=1&include_adult=false&query=" +
+      "https://api.themoviedb.org/3/search/multi?api_key="+process.env.REACT_APP_MOVIE_API_KEY+"&page=1&include_adult=false&query=" +
         searchKey
     )
       .then((res) => res.json())
@@ -95,6 +96,15 @@ export default function Search() {
               : "hidden"
           }
         >
+          {(search?.length<0 || !search)&&
+          <Dna
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />}
           {search?.map((el) => (
             <li
               onClick={() => (window.location.href = el.link)}
