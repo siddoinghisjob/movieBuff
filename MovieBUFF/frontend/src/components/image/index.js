@@ -22,7 +22,8 @@ export default function Image(source) {
                 image.current.classList.add('fadeIn');
                 imageLoader.current.classList.add('hidden');
                 image.current.classList.remove('hidden');
-              }}/>
+              }}
+              loading={source?.lazy?'lazy':'eager'}/>
     </div>
     </>
   )

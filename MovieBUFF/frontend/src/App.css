@@ -1,40 +1,53 @@
 @import 'animate.css';
 
-body{
+body {
   font-family: 'Roboto', sans-serif;
 }
 
-.specSha{
-  box-shadow: 0px 0px 7px 10px rgb(0,0,0,0.25);
+.specSha {
+  box-shadow: 0px 0px 7px 10px rgb(0, 0, 0, 0.25);
 }
 
-.bgnice{
-  background: rgb(1, 179, 228);  /* fallback for old browsers */;
-  color:#103210;
+.preventCopy {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
-.textShadow{
+.bgnice {
+  background: rgb(1, 179, 228);
+  /* fallback for old browsers */
+  ;
+  color: #103210;
+}
+
+.textShadow {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-.fadeIn{
+.fadeIn {
   animation: fadeIn 2s 0.3s forwards;
 }
 
-.strech{
+.strech {
   animation: rubberBand 2s 3s forwards;
 }
 
 @keyframes fadeInfadeOut {
-  to{opacity: 1;}
+  to {
+    opacity: 1;
+  }
 }
 
-.fontDesi{
+.fontDesi {
   font-family: 'Roboto', sans-serif;
   font-family: 'Rubik', sans-serif;
 }
 
-.brandHeading{
+.brandHeading {
   animation: fadeIn 2s 0.3s;
   animation-fill-mode: forwards;
   font-family: 'Roboto', sans-serif;
@@ -46,36 +59,36 @@ body{
   width: 10px;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
 /* Track */
 .scrollSpec::-webkit-scrollbar-track {
-  background: #c0ffc0; 
+  background: #c0ffc0;
   border-radius: 20px;
 }
- 
+
 /* Handle */
 .scrollSpec::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
   border-radius: 20px;
 }
 
 /* Handle on hover */
 .scrollSpec::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
-.Tiles.activate{
+.Tiles.activate {
   animation: fadeIn 3s;
   animation-fill-mode: forwards;
 }
 
-.zoomIn{
+.zoomIn {
   animation: zoomIn 1s 0.2s forwards;
 }
 
-.zoomOut{
+.zoomOut {
   animation: zoomOut 1s 02s backwards;
 }

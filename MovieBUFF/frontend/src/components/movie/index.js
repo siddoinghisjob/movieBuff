@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import Header from "../header";
 import { useParams } from "react-router-dom";
 import Image from "../image";
-import { InfinitySpin, Dna } from "react-loader-spinner";
+import { ThreeDots, Dna, RotatingLines } from "react-loader-spinner";
 
 export default function Movie() {
   let { id } = useParams();
@@ -11,12 +11,13 @@ export default function Movie() {
   const Cast = React.lazy(() => import("../crew"));
   const Footer = React.lazy(() => import("../footer"));
   const [movie, setMovie] = useState();
-  const [trailer, setTrailer] = useState(null);
+  const [trailer, setTrailer] = useState(false);
   const getData = () => {
     fetch(
       "https://api.themoviedb.org/3/movie/" +
         id +
-        "?api_key="+process.env.REACT_APP_MOVIE_API_KEY
+        "?api_key=" +
+        process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -60,7 +61,8 @@ export default function Movie() {
     fetch(
       "https://api.themoviedb.org/3/movie/" +
         id +
-        "/videos?api_key="+process.env.REACT_APP_MOVIE_API_KEY
+        "/videos?api_key=" +
+        process.env.REACT_APP_MOVIE_API_KEY
     )
       .then((res) => res.json())
       .then((data) => {
@@ -95,7 +97,7 @@ export default function Movie() {
       <Header />
       <div
         style={style.banner}
-        className="flex fontDesi h-full w-full gap-10 text-white flex-col p-2 md:px-10 py-5 justify-center items-center"
+        className="flex relative fontDesi h-full w-full gap-10 text-white flex-col p-2 md:px-10 py-5 justify-center items-center"
       >
         <div className="text-lg text-center h-full w-full p-2 md:flex flex-col md:flex-row items-center justify-between">
           <div>
@@ -117,43 +119,58 @@ export default function Movie() {
             <div className="hidden md:flex h-72 w-fit min-w-[12rem] fadeInOut justify-center items-center rounded-md">
               <Image source={movie?.poster} alt={movie?.name} />
             </div>
-            <div className="flex flex-col fontDesi h-full justify-center w-full p-1">
-              {trailer && (
-                <div className="flex relative justify-center items-center md:min-h-[17rem] min-h-[13rem] w-full bg-gradient-to-tr from-orange-300 to bg-green-400 rounded-lg">
-                  <iframe
-                    src={"https://www.youtube.com/embed/" + trailer}
-                    frameborder="0"
-                    allow="autoplay; encrypted-media"
-                    allowfullscreen
-                    title="video"
-                    className="h-full min-w-full absolute z-10 md:min-h-[17rem] min-h-[13rem]"
-                    loading="lazy"
-                  />
-                  <div className="w-20 z-0 h-20 flex items-center justify-center animate-pulse text-prime bg-yellow-500 rounded-full">
-                    <InfinitySpin width="200" color="#4fa94d" />
-                  </div>
+            <div className="flex flex-col fontDesi h-full justify-center w-full p-3">
+                  {trailer && (
+                    <div className="flex relative justify-center items-center md:min-h-[17rem] min-h-[13rem] w-full bg-black bg-opacity-50 rounded-lg">
+                      <iframe
+                        src={"https://www.youtube.com/embed/" + trailer}
+                        frameborder="0"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen
+                        title="video"
+                        className="h-full z-10 min-w-full max-w-full md:min-h-[17rem] min-h-[13rem]"
+                        loading="lazy"
+                      />
+                      <div className="w-20 z-0 absolute h-20 flex items-center justify-center animate-pulse shadow-xl rounded-full">
+                        <RotatingLines
+                          strokeColor="white"
+                          strokeWidth="4"
+                          animationDuration="0.75"
+                          width="96"
+                          visible={true}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {!trailer &&
+                    movie?.bg !== "/assets/images/nonfoundhor.png" && (
+                      <img src={movie?.bg} alt={movie?.name} />
+                    )}
                 </div>
-              )}
-              <div className="flex md:hidden flex-row w-full text-center justify-center items-center">
-                Rated
-                <b className="text-xl text-yellow-400">
-                  {" "}
-                  &nbsp;{movie?.voteAcu}
-                </b>
-                /10
-              </div>
-            </div>
           </div>
           <div className="hidden md:flex flex-col justify-between h-full">
-          <p className="w-full justify-center flex items-center">
-          {!movie?.overview&&<InfinitySpin width="200" color="#4fa94d" />}
-                {movie?.overview}
-          </p>
+            <p className="w-full justify-center flex items-center">
+              {!movie?.overview && (
+                <div className="absolute top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <ThreeDots
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="#4fa94d"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true}
+                  />
+                </div>
+              )}
+              {movie?.overview}
+            </p>
             <div className="p-2 w-full flex items-center justify-between flex-row">
               {movie?.home && (
                 <a
                   href={movie?.home ? movie?.home : ""}
-                  className="bg-yellow-500 text-black border-2 border-black rounded-xl p-2 font-extrabold"
+                  className="bg-yellow-500 text-black border-2 border-black rounded-xl p-2 font-extrabold text-center"
                 >
                   Watch NOW
                 </a>
@@ -181,15 +198,28 @@ export default function Movie() {
             />
           </div>
           <p className="w-full justify-center flex items-center">
-          {!movie?.overview&&<InfinitySpin width="200" color="#4fa94d" />}
-                {movie?.overview}
+            {!movie?.overview && (
+              <div className="absolute top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <ThreeDots
+                  height="80"
+                  width="80"
+                  radius="9"
+                  color="#4fa94d"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />
+              </div>
+            )}
+            {movie?.overview}
           </p>
         </div>
         <div className="items-center w-full flex flex-row justify-between">
           {movie?.home && (
             <button
               onClick={() => (window.location.href = movie?.home)}
-              className="bg-yellow-500 text-black border-2 border-black rounded-xl p-2 font-extrabold"
+              className="bg-yellow-500 text-black border-2 text-center border-black rounded-xl p-2 font-extrabold"
             >
               Watch NOW
             </button>
@@ -209,7 +239,7 @@ export default function Movie() {
             <span className="bg-white p-2 py-1 shadow-inner text-lg w-">
               {movie?.time}min.
             </span>
-            <span className="bg-white p-2 py-1 shadow-inner text-lg flex gap-2 flex-auto">
+            <span className="bg-white p-2 py-1 overflow-x-auto shadow-inner text-lg flex gap-2 flex-auto">
               {movie?.lang?.map((el) => (
                 <span>{el.name}</span>
               ))}
@@ -259,7 +289,7 @@ export default function Movie() {
         </Suspense>
         <Suspense
           fallback={
-            <div className="h-full w-full justify-center items-center flex">
+            <div className="h-full w-full justify-center items-center h-7/12 md:h-9/12 flex">
               <Dna
                 visible={true}
                 height="80"
@@ -271,7 +301,7 @@ export default function Movie() {
             </div>
           }
         >
-          <Rec id={id} type="movie"/>
+          <Rec id={id} type="movie" />
         </Suspense>
         <Suspense
           fallback={

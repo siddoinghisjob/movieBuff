@@ -61,8 +61,10 @@ export default function Tiles(props) {
   return (
     <div ref={ref} 
     className={inView?"flex flex-col w-full rounded-md border-2 p-2 text-white justify-center items-center text-2xl py-10 opacity-100 active transition-all":"flex flex-col w-full rounded-md border-2 p-2 text-white justify-center items-center text-2xl py-10 opacity-50"}>
-          <div className=" bg-gradient-to-r from-tert to-second text-prime p-2 rounded-md shadow-inner fontDesi">
+          <div className="w-full bg-gradient-to-r flex justify-center items-center from-tert to-second text-prime p-2 rounded-md shadow-inner fontDesi">
+            <p className='w-full text-center'>
             {props.heading}
+            </p>
           </div>
           <Slider arr={arr}/>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense, useRef } from "react";
 import Header from "../header";
-import { Dna, InfinitySpin, RotatingLines } from "react-loader-spinner";
+import { Dna, ThreeDots, RotatingLines } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
 
 export default function TV() {
@@ -105,7 +105,7 @@ export default function TV() {
           episodeData.push({
             name: el.name,
             poster: "https://image.tmdb.org/t/p/w300" + el.still_path,
-            overview: data.overview ? data.overview : " ",
+            overview: el.overview ? el.overview : " ",
             rating: el.vote_count,
             number: el.episode_number,
           })
@@ -204,17 +204,17 @@ export default function TV() {
                 </div>
                 <div className="flex flex-col fontDesi h-full justify-center w-full p-3">
                   {trailer && (
-                    <div className="flex relative w-full min-w-[15rem] justify-center items-center md:min-h-[17rem] min-h-[13rem] bg-black bg-opacity-50">
+                    <div className="flex relative justify-center items-center md:min-h-[17rem] min-h-[13rem] w-full bg-black bg-opacity-50 rounded-lg">
                       <iframe
                         src={"https://www.youtube.com/embed/" + trailer}
                         frameborder="0"
                         allow="autoplay; encrypted-media"
                         allowfullscreen
                         title="video"
-                        className="h-full z-10 min-w-full absolute max-w-full md:min-h-[17rem] min-h-[13rem]"
+                        className="h-full z-10 min-w-full max-w-full md:min-h-[17rem] min-h-[13rem]"
                         loading="lazy"
                       />
-                      <div className="w-20 z-0 h-20 flex items-center justify-center animate-pulse shadow-xl rounded-full">
+                      <div className="w-20 z-0 absolute h-20 flex items-center justify-center animate-pulse shadow-xl rounded-full">
                         <RotatingLines
                           strokeColor="white"
                           strokeWidth="4"
@@ -225,12 +225,27 @@ export default function TV() {
                       </div>
                     </div>
                   )}
+                  {!trailer &&
+                    tv?.bg !== "/assets/images/nonfoundhor.png" && (
+                      <img src={tv?.bg} alt={tv?.name} />
+                    )}
                 </div>
               </div>
               <div className="hidden md:flex flex-col justify-between h-full">
                 <p className="w-full flex justify-center items-center">
                   {!tv?.overview && (
-                    <InfinitySpin width="200" color="#4fa94d" />
+                    <div className="absolute top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <ThreeDots
+                        height="80"
+                        width="80"
+                        radius="9"
+                        color="#4fa94d"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      />
+                    </div>
                   )}
                   {tv?.overview}
                   {tv?.date}
@@ -239,7 +254,7 @@ export default function TV() {
                   {tv?.home && (
                     <a
                       href={tv?.home ? tv?.home : ""}
-                      className="bg-yellow-500 text-black border-2 border-black rounded-xl p-2 font-extrabold"
+                      className="bg-yellow-500 text-center text-black border-2 border-black rounded-xl p-2 font-extrabold"
                     >
                       Watch NOW
                     </a>
@@ -281,7 +296,20 @@ export default function TV() {
                 </Suspense>
               </div>
               <p className="w-full justify-center items-center">
-                {!tv?.overview && <InfinitySpin width="200" color="#4fa94d" />}
+                {!tv?.overview && (
+                  <div className="absolute top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <ThreeDots
+                      height="80"
+                      width="80"
+                      radius="9"
+                      color="#4fa94d"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClassName=""
+                      visible={true}
+                    />
+                  </div>
+                )}
                 {tv?.overview}
               </p>
             </div>
@@ -289,7 +317,7 @@ export default function TV() {
               {tv?.home && (
                 <button
                   onClick={() => (window.location.href = tv?.home)}
-                  className="bg-yellow-500 text-black border-2 border-black rounded-xl p-2 font-extrabold"
+                  className="bg-yellow-500 text-center text-black border-2 border-black rounded-xl p-2 font-extrabold"
                 >
                   Watch NOW
                 </button>
@@ -319,7 +347,7 @@ export default function TV() {
                 </div>
               )}
               <div className="flex flex-row gap-2 items-center p-3 rounded-lg">
-                <span className="bg-cyan-100 text-cyan-800 px-2 py-2 font-bold rounded-md w-fit">
+                <span className="bg-cyan-100 overflow-x-auto text-cyan-800 px-2 py-2 font-bold rounded-md w-fit">
                   {tv?.status}
                 </span>
                 <ul>
@@ -330,7 +358,18 @@ export default function TV() {
               </div>
               <p className="text-lg flex w-full justify-center items-center">
                 {!episode?.overview && (
-                  <InfinitySpin width="200" color="#4fa94d" />
+                  <div className="flex items-center justify-center">
+                    <ThreeDots
+                      height="80"
+                      width="80"
+                      radius="9"
+                      color="#4fa94d"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClassName=""
+                      visible={true}
+                    />
+                  </div>
                 )}
                 {episode?.overview}
               </p>

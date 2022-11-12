@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import {Dna} from "react-loader-spinner"
+import {RotatingLines} from "react-loader-spinner"
 
 export default function Search() {
   const [search, setSearch] = useState([]);
   const [searchKey, setSearchKey] = useState();
+  const[loader,setLoader]=useState(true);
   const div = useRef();
   useEffect(() => {
     document.addEventListener("click", (event) => {
@@ -54,6 +55,7 @@ export default function Search() {
                 link: link,
               };
             setSearch((search) => [...search, dataEntr]);
+            setLoader(loader=>false);
           }
         });
       })
@@ -68,6 +70,7 @@ export default function Search() {
   };
   useEffect(() => {
     setSearch((search) => "");
+    setLoader(loader=>true);
     getSearch();
     const arr = search.sort(
       (a, b) => parseInt(b.popularity) - parseInt(a.popularity)
@@ -92,44 +95,49 @@ export default function Search() {
         <ul
           className={
             searchKey?.length > 0
-              ? "absolute max-h-64 md:max-h-72 overflow-y-auto overflow-x-hidden scrollSpec bg-white z-50 gap-2 flex flex-col text-lg rounded-b-xl text-black p-2 left-0 right-0"
+              ? "absolute max-h-64 md:max-h-72 overflow-y-auto overflow-x-hidden scrollSpec bg-white z-[9999] gap-2 flex flex-col text-lg rounded-b-xl text-black p-2 left-0 right-0"
               : "hidden"
           }
         >
-          {(search?.length<0 || !search)&&
-          <Dna
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="dna-loading"
-          wrapperStyle={{}}
-          wrapperClass="dna-wrapper"
-        />}
-          {search?.map((el) => (
-            <li
-              onClick={() => (window.location.href = el.link)}
-              className="items-center bg-gray-200 rounded-lg text-black cursor-pointer grid grid-cols-2 w-full"
-            >
-              <span className="h-full w-full flex justify-center">
-                <img
-                  className="h-24"
-                  alt={el.name}
-                  src={el.profile}
-                  loading="lazy"
-                />
-              </span>
-              <span className="flex flex-col md:flex-row gap-3 p-5 justify-start">
-                <span className="w-full overflow-x-auto scrollSpec capitalize">{el.name}</span>
-                <span className="uppercase font-bold">{el.type}</span>
-                <ul>
-                  {el.country?.map((ele) => (
-                    <li>{ele}</li>
-                  ))}
-                </ul>
-                <span>{el.rate}</span>
-              </span>
-            </li>
-          ))}
+          {loader && (
+            <div className="w-full h-full p-2 flex justify-center items-center">
+              <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="36"
+                visible={true}
+              />
+            </div>
+          )}
+          {!loader &&
+            search?.map((el) => (
+              <li
+                onClick={() => (window.location.href = el.link)}
+                className="items-center bg-gray-200 rounded-lg text-black cursor-pointer flex justify-between px-1 w-full"
+              >
+                <span className="h-full w-full flex justify-center">
+                  <img
+                    className="h-24"
+                    alt={el.name}
+                    src={el.profile}
+                    loading="lazy"
+                  />
+                </span>
+                <span className="flex flex-col md:flex-row gap-3 p-5 justify-start">
+                  <span className="w-full overflow-x-auto scrollSpec capitalize">
+                    {el.name}
+                  </span>
+                  <span className="uppercase font-bold">{el.type}</span>
+                  <ul>
+                    {el.country?.map((ele) => (
+                      <li>{ele}</li>
+                    ))}
+                  </ul>
+                  <span className="text-sm flex items-center justify-center"><b className="text-lg">{el.rate}</b>/10</span>
+                </span>
+              </li>
+            ))}
         </ul>
       </span>
     </>

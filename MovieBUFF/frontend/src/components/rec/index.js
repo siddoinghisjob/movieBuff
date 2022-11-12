@@ -25,7 +25,7 @@ export default function Rec(props) {
                 ? "https://image.tmdb.org/t/p/w500" + el.poster_path
                 : "/assets/images/nonfoundhor.png",
               alt: el.title,
-              link: "/tv/" + el.id,
+              link: "/"+props?.type+"/" + el.id,
             },
           ]);
         });

@@ -28,6 +28,7 @@ export default function Slider(props) {
                   <Image
                     source={props.arr[i]?.poster}
                     alt={props.arr[i]?.name}
+                    lazy={i>10?true:false}
                   />
                 </div>
               )}
@@ -45,7 +46,7 @@ export default function Slider(props) {
   return (
     <div className="relative w-full overflow-x-auto">
       <div
-        className="absolute top-1/2 left-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
+        className="absolute hidden md:block top-1/2 left-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
         onClick={() => scrollTo(-400)}
       >
         <b className="text-tert p-0 rotate-180 rounded-full h-10 w-10 flex justify-center items-center">
@@ -66,12 +67,12 @@ export default function Slider(props) {
       </div>
       <div
         ref={ref}
-        className="relative w-full overflow-x-hidden scroll-smooth flex flex-row"
+        className="relative w-full overflow-x-auto scrollSpec scroll-smooth flex flex-row"
       >
         {arr}
       </div>
       <div
-        className="absolute bottom-1/2 right-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
+        className="absolute hidden md:block bottom-1/2 right-0 bg-black rounded-full z-50 p-2 cursor-pointer opacity-60 hover:opacity-100"
         onClick={() => scrollTo(400)}
       >
         <b className="text-tert p-0 rotate-180 rounded-full h-10 w-10 flex justify-center items-center">

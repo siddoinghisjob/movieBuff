@@ -125,7 +125,7 @@ export default function Home() {
           <Slider arr={top} />
         </Suspense>
       </div>
-      <div className="w-full flex flex-col items-center justify-center px-10 gap-10 mt-5">
+      <div className="w-full flex flex-col items-center justify-center px-4 gap-10 mt-5">
         <Suspense
           fallback={
             <div className="h-full w-full justify-center items-center flex">
@@ -140,7 +140,7 @@ export default function Home() {
             </div>
           }
         >
-          <Tiles url="https://www" heading="Trending" state={trending} />
+          <Tiles heading="Trending" state={trending} />
         </Suspense>
         <Suspense
           fallback={
