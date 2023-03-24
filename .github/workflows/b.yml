@@ -1,9 +1,8 @@
 name: Send Release Notes to Beamer
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   update-beamer:
@@ -12,7 +11,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Update Beamer
+    - name: Send Release Notes to Beamer
       env:
         BEAMER_API_KEY: b_PUZ1AdU5J+6lxe/HIPEPblCIjQ7CKoF8PDJ+wBILNK4=
         BEAMER_TITLE: ${{github.event.release.tag_name}}
