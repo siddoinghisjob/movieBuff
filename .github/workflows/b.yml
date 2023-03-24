@@ -1,22 +1,19 @@
-name: Beamer update
-
+name: Send release notes to Beamer
 on:
-  push:
-    branches:
-      - main
-
+  release:
+    types: [published]
 jobs:
-  beamer-update:
+  send-release-notes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Send Beamer update
-        env:
-          BEAMER_API_KEY: b_PUZ1AdU5J+6lxe/HIPEPblCIjQ7CKoF8PDJ+wBILNK4=
+      - name: Send release notes to Beamer
         run: |
+          TAG=$(echo ${{ github.event.release.tag_name }})
+          RELEASE_NOTES=$(echo ${{ github.event.release.body }})
           curl -H "Content-Type: application/json" \
-               -H "X-Beamer-Api-Key: $BEAMER_API_KEY" \
+               -H "X-Beamer-Api-Key: b_PUZ1AdU5J+6lxe/HIPEPblCIjQ7CKoF8PDJ+wBILNK4=" \
                -X POST \
-               -d '{"title": "New commit", "description": "A new commit has been pushed to the main branch."}' \
+               -d "{\"title\": \"Release $TAG\", \"description\": \"$RELEASE_NOTES\"}" \
                https://api.getbeamer.com/v3/updates
