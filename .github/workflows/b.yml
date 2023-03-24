@@ -12,5 +12,9 @@ jobs:
         run: |
           TAG=$(echo ${{ github.event.release.tag_name }})
           RELEASE_NOTES=$(echo ${{ github.event.release.body }})
-          response=$(curl -H "Content-Type: application/json" \ -H "X-Beamer-Api-Key: b_PUZ1AdU5J+6lxe/HIPEPblCIjQ7CKoF8PDJ+wBILNK4=" \ -X POST \ -d "{\"title\": \"Release $TAG\", \"description\": \"$RELEASE_NOTES\"}" \ https://api.getbeamer.com/v3/updates)
+          response=$(curl -H "Content-Type: application/json" \
+               -H "X-Beamer-Api-Key: ${{ secrets.BEAMER_API_KEY }}" \
+               -X POST \
+               -d "{\"title\": \"Release $TAG\", \"description\": \"$RELEASE_NOTES\"}" \
+               https://app.getbeamer.com/akto8998/updates/updates)
           echo $response
