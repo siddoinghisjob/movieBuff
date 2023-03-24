@@ -1,20 +1,21 @@
-name: Send release notes to Beamer
+name: Send Release Notes to Beamer
+
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+
 jobs:
-  send-release-notes:
+  update-beamer:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Send release notes to Beamer
-        run: |
-          TAG=$(echo ${{ github.event.release.tag_name }})
-          RELEASE_NOTES=$(echo ${{ github.event.release.body }})
-          response=$(curl -H "Content-Type: application/json" \
-               -H "Beamer-Api-Key: ${{ secrets.BEAMER_API_KEY }}" \
-               -X POST \
-               -d "{\"title\": \"Release $TAG\", \"content\": \"$RELEASE_NOTES\"}" \
-               https://api.getbeamer.com/v0/posts)
-          echo $response
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Update Beamer
+      env:
+        BEAMER_API_KEY: b_PUZ1AdU5J+6lxe/HIPEPblCIjQ7CKoF8PDJ+wBILNK4=
+        BEAMER_TITLE: ${{github.event.release.tag_name}}
+        BEAMER_CONTENT: ${{github.event.release.body}}
+      run: |
+        curl -X POST -H "Content-Type: application/json" -H "Beamer-Api-Key: $BEAMER_API_KEY" -d '{"title": "'"$BEAMER_TITLE"'", "content": "'"$BEAMER_CONTENT"'"}' "https://api.getbeamer.com/v0/posts"
