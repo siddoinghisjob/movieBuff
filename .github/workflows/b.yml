@@ -17,4 +17,15 @@ jobs:
         BEAMER_TITLE: ${{github.event.release.tag_name}}
         BEAMER_CONTENT: ${{github.event.release.body}}
       run: |
-        curl -X POST -H "Content-Type: application/json" -H "Beamer-Api-Key: $BEAMER_API_KEY" -d '{"title": "'"$BEAMER_TITLE"'", "content": "'"$BEAMER_CONTENT"'"}' "https://api.getbeamer.com/v0/posts"
+        curl -X POST -H "Content-Type: application/json" -H "Beamer-Api-Key: $BEAMER_API_KEY" 
+        -d '{
+            "title": [
+              "'"$BEAMER_TITLE"'"
+            ],
+            "content": [
+              "'"$BEAMER_CONTENT"'"
+            ],
+            "category": "new",
+            "publish": true
+          }' 
+        "https://api.getbeamer.com/v0/posts"
